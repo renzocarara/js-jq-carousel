@@ -10,7 +10,39 @@ $(document).ready(function() {
     // intercetto click su freccia avanti
     $('#forward').click(function() {
 
-        // l'immagine corrente è quella che ha la classe active associata
+        nextClicked();
+
+    }); // end gestione click frccia in avanti
+
+    // intercetto click su freccia indietro
+    $('#back').click(function() {
+
+        prevClicked();
+
+    }); // end gestione click frccia indietro
+
+
+    // intercetto click su bullets
+    $('.bullet').click(function() {
+        console.log("click on bullet");
+
+        bulletClicked();
+
+    }); // end gestione click freccia in avanti
+
+    function bulletClicked() {
+
+        //tbd
+
+
+
+    }
+
+
+
+
+
+    function nextClicked() { // l'immagine corrente è quella che ha la classe active associata
         // in ogni istante deve essercene sempre e solo una
         var currentImg = $('img.active');
         var currentBul = $('span.selected'); // bullet corrente
@@ -37,14 +69,10 @@ $(document).ready(function() {
 
         currentImg.addClass("active"); // visualizzo la nuova immagine corrente aggiungendogli la classe active
         currentBul.addClass("selected"); // attivo il bullet
-
-    }); // end gestione click frccia in avanti
-
+    }
 
 
-    // intercetto click su freccia indietro
-    $('#back').click(function() {
-
+    function prevClicked() {
         // l'immagine corrente è quella che ha la classe active associata
         // in ogni istante deve essercene sempre e solo una
         var currentImg = $('img.active');
@@ -53,7 +81,6 @@ $(document).ready(function() {
         // nascondo l'immagine corrente rimuovendo la classe
         currentImg.removeClass("active");
         currentBul.removeClass("selected"); // deseleziono bullet
-
 
         // verifico qual è l'immagine precedente da visualizzare
         // nel caso sono sulla prima allora la successiva sarà l'ultima in elenco (last)
@@ -73,9 +100,7 @@ $(document).ready(function() {
         currentImg.addClass("active"); // visualizzo la nuova immagine corrente aggiungendogli la classe active
         currentBul.addClass("selected"); // attivo il bullet
 
-    }); // end gestione click frccia indietro
-
-
+    }
 
 
 }); // end document ready
