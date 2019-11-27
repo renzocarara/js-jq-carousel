@@ -14,14 +14,12 @@
 
 #slider {
     position: relative;
-    background-color: lightyellow;
     width: 1170px;
     height: 600px;
     margin: auto;
 }
 
 #back, #forward {
-    background-color: lightgreen;
     display: flex;
     justify-content: center;
     align-items: center;
