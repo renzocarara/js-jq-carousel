@@ -10,12 +10,10 @@ $(document).ready(function() {
 
     // intercetto click su freccia avanti
     $('#forward').click(function() {
-        console.log("click su forward");
 
         // l'immagine corrente è quella che ha la classe active associata
         // in ogni istante deve essercene sempre e solo una
         var currentImg = $('img.active');
-        console.log("currentImg:", currentImg);
 
         // nascondo l'immagine corrente rimuovendo la classe
         currentImg.removeClass("active");
@@ -24,30 +22,27 @@ $(document).ready(function() {
         // nel caso sono sull'ultima allora la successiva sarà la prima in elenco(first)
         // altrimenti prendo la successiva a quella corrente
         if (!currentImg.hasClass("last")) {
-            // non sto visualizzando l'ultima immagine
-            var nextImg = currentImg.next();
-            console.log("nextImg:", nextImg);
+
+            // non sto visualizzando l'ultima immagine, l'immagine corrente diventa quella successiva
+            currentImg = currentImg.next();
 
         } else {
-            // l'immagine corrente è l'ultima del mio carousel, seleziono la prima immagine,
-            // tramite la classe first che ho associato solo alla prima immagine
-            var nextImg = $('img.first');
-            console.log("nextImg:", nextImg);
+            // l'immagine corrente è l'ultima del mio carousel, l'immagine corrente diventa la prima immagine,
+            // del carousel, seleziono tramite la classe first che ho associato solo alla prima immagine
+            currentImg = $('img.first');
         }
 
-        // visualizzo l'immagine successiva aggiungendogli la classe active
-        nextImg.addClass("active");
+        // visualizzo la nuova immagine corrente aggiungendogli la classe active
+        currentImg.addClass("active");
 
-    });
+    }); // end gestione click frccia in avanti
 
     // intercetto click su freccia indietro
     $('#back').click(function() {
-        console.log("click su back");
 
         // l'immagine corrente è quella che ha la classe active associata
         // in ogni istante deve essercene sempre e solo una
         var currentImg = $('img.active');
-        console.log("currentImg:", currentImg);
 
         // nascondo l'immagine corrente rimuovendo la classe
         currentImg.removeClass("active");
@@ -57,28 +52,18 @@ $(document).ready(function() {
         // altrimenti prendo la precedente a quella corrente
         if (!currentImg.hasClass("first")) {
             // non sto visualizzando la prima immagine quindi seleziono semplicemente l'immagine precedente
-            var prevImg = currentImg.prev();
-            console.log("prevImg:", prevImg);
+            currentImg = currentImg.prev();
 
         } else {
-            // l'immagine corrente è la prima del mio carousel, seleziono l'ultima immagine,
-            // tramite la classe last che ho associato solo all'ultima immagine
-            var prevImg = $('img.last');
-            console.log("nextImg:", prevImg);
+            // l'immagine corrente è la prima del mio carousel, l'immagine corrente diventa l'ultima immagine,
+            // del carousel, seleziono tramite la classe last che ho associato solo all'ultima immagine
+            currentImg = $('img.last');
         }
 
-        // visualizzo l'immagine successiva aggiungendogli la classe active
-        prevImg.addClass("active");
+        // visualizzo la nuova immagine corrente aggiungendogli la classe active
+        currentImg.addClass("active");
 
-
-
-
-
-
-
-
-
-    });
+    }); // end gestione click frccia indietro
 
 
 
