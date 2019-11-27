@@ -24,15 +24,20 @@ $(document).ready(function() {
 
     // intercetto click su bullets
     $('.bullet').click(function() {
-        console.log("click on bullet");
 
-        bulletClicked();
+        // ricavo l'indice (posizione) dell'elemento cliccato,
+        // rispetto ai suoi fratelli tutti all'interno dell'elemento parent che li contiene
+        // tramite la funzione index() applicata sull'elemento $(this) cioè l'elemento sul quale
+        // ho intercettato il click
+
+        bulletClicked($(this).index());
 
     }); // end gestione click freccia in avanti
 
-    function bulletClicked() {
+    function bulletClicked(clickedBullett) {
 
         //tbd
+        console.log("indice bullet cliccato:", clickedBullett);
 
 
 
