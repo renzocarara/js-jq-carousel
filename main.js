@@ -7,105 +7,72 @@
 
 $(document).ready(function() {
 
-    // intercetto click su freccia avanti
-    $('#forward').click(function() {
+    // intercetto click sulle frecce
+    $('.arrow').click(function() {
 
-        nextClicked();
+        // recupero l'indice della slide corrente
+        // l'immagine corrente è quella che ha la classe active associata
+        // in ogni istante deve essercene sempre e solo una
+        var imgPosition = $('img.active').index();
 
-    }); // end gestione click frccia in avanti
+        // in base a dove devo andare e a dove sono, decido quale sarà la prossima slide
+        if (($(this).hasClass("next"))) { // c'è stato click su freccia in avanti
 
-    // intercetto click su freccia indietro
-    $('#back').click(function() {
+            if ($('img.active').hasClass("last")) {
+                // sono in fondo al carousel, la prossima immagine da visualizzare sarà la prima
+                imgPosition = 0; // indice della nuova slide da visualizzare
+            } else {
+                // non sono ancora all'ultima immagine del carousel, procedo con la successiva
+                imgPosition += 1; // indice della nuova slide da visualizzare
+            }
+        }
 
-        prevClicked();
+        if (($(this).hasClass("prev"))) { // c'è stato click su freccia indietro
 
-    }); // end gestione click frccia indietro
+            if (($('img.active').hasClass("first"))) {
+                // sono all'inizio del carousel, la prossima immagine da visualizzare sarà l'ultima (ciclo all'indietro)
+                imgPosition = ($('img.last').index()); // indice della nuova slide da visualizzare
+            } else {
+                // non sono ancora sulla prima immagine del carousel, procedo con la precedente
+                imgPosition -= 1; // indice della nuova slide da visualizzare
+            }
+        }
+
+        display(imgPosition); // passo alla funzione l'indice della nuova posizione da visualizzare
+
+    }); // end gestione click su frecce
+
 
 
     // intercetto click su bullets
     $('.bullet').click(function() {
 
-        // ricavo l'indice (posizione) dell'elemento cliccato,
+        // ricavo l'indice (posizione) dell'elemento cliccato (bullet),
         // rispetto ai suoi fratelli tutti all'interno dell'elemento parent che li contiene
         // tramite la funzione index() applicata sull'elemento $(this) cioè l'elemento sul quale
-        // ho intercettato il click
+        // ho intercettato il click, passo questo indice alla funzione che gestisce le visualizzzioni
+        var bulletPosition = ($(this).index());
 
-        bulletClicked($(this).index());
+        display(bulletPosition);
 
-    }); // end gestione click freccia in avanti
-
-    function bulletClicked(clickedBullett) {
-
-        //tbd
-        console.log("indice bullet cliccato:", clickedBullett);
+    }); // end gestione click su bullett
 
 
 
+    function display(newPosition) {
+
+        // Questa funzione riceve un parametro newPosition, che indica qual è la nuova
+        // immagine che sarà visualizzata e quale bullett sarà evidenziato
+
+        $('img.active').removeClass("active"); // nascondo l'immagine corrente rimuovendo la classe
+        $('span.selected').removeClass("selected"); // disattivo il bullet
+
+        // in base ad newPosition seleziono gli elementi (immagine  e bullet) da visualizzare
+        var newSlide = $('#slider img').eq(newPosition);
+        var newBul = $('#bullets span').eq(newPosition);
+
+        newSlide.addClass("active"); // visualizzo la nuova immagine corrente aggiungendogli la classe active
+        newBul.addClass("selected"); // evidenzio il bullet
     }
-
-
-
-
-
-    function nextClicked() { // l'immagine corrente è quella che ha la classe active associata
-        // in ogni istante deve essercene sempre e solo una
-        var currentImg = $('img.active');
-        var currentBul = $('span.selected'); // bullet corrente
-
-        currentImg.removeClass("active"); // nascondo l'immagine corrente rimuovendo la classe
-        currentBul.removeClass("selected"); // deseleziono bullet
-
-        // verifico qual è l'immagine successiva da visualizzare
-        // nel caso sono sull'ultima allora la successiva sarà la prima in elenco(first)
-        // altrimenti prendo la successiva a quella corrente
-        if (!currentImg.hasClass("last")) {
-
-            // non sto visualizzando l'ultima immagine, l'immagine corrente diventa quella successiva
-            currentImg = currentImg.next();
-            currentBul = currentBul.next("span"); // seleziono bullet successivo
-
-        } else {
-            // l'immagine corrente è l'ultima del mio carousel, l'immagine corrente diventa la prima immagine,
-            // del carousel, seleziono tramite la classe first che ho associato solo alla prima immagine
-            currentImg = $('img.first');
-            currentBul = $('#bullets span.first'); // seleziono primo bullett
-
-        }
-
-        currentImg.addClass("active"); // visualizzo la nuova immagine corrente aggiungendogli la classe active
-        currentBul.addClass("selected"); // attivo il bullet
-    }
-
-
-    function prevClicked() {
-        // l'immagine corrente è quella che ha la classe active associata
-        // in ogni istante deve essercene sempre e solo una
-        var currentImg = $('img.active');
-        var currentBul = $('span.selected'); // bullet corrente
-
-        // nascondo l'immagine corrente rimuovendo la classe
-        currentImg.removeClass("active");
-        currentBul.removeClass("selected"); // deseleziono bullet
-
-        // verifico qual è l'immagine precedente da visualizzare
-        // nel caso sono sulla prima allora la successiva sarà l'ultima in elenco (last)
-        // altrimenti prendo la precedente a quella corrente
-        if (!currentImg.hasClass("first")) {
-            // non sto visualizzando la prima immagine quindi seleziono semplicemente l'immagine precedente
-            currentImg = currentImg.prev();
-            currentBul = currentBul.prev("span"); // seleziono bullet precedente
-
-        } else {
-            // l'immagine corrente è la prima del mio carousel, l'immagine corrente diventa l'ultima immagine,
-            // del carousel, seleziono tramite la classe last che ho associato solo all'ultima immagine
-            currentImg = $('img.last');
-            currentBul = $('#bullets span.last'); // seleziono ultimo bullet
-        }
-
-        currentImg.addClass("active"); // visualizzo la nuova immagine corrente aggiungendogli la classe active
-        currentBul.addClass("selected"); // attivo il bullet
-
-    }
-
 
 }); // end document ready
